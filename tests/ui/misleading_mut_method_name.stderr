@@ -1,0 +1,59 @@
+error: method name suggests that it returns a mutable value, but the return type is not mutable
+  --> tests/ui/misleading_mut_method_name.rs:57:8
+   |
+LL |     fn window_mut(&self) -> &[u8] {
+   |        ^^^^^^^^^^
+   |
+   = note: `-D clippy::misleading-mut-method-name` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::misleading_mut_method_name)]`
+
+error: method name suggests that it returns a mutable value, but the return type is not mutable
+  --> tests/ui/misleading_mut_method_name.rs:62:8
+   |
+LL |     fn text_mut(&self) -> &str {
+   |        ^^^^^^^^
+
+error: method name suggests that it returns a mutable value, but the return type is not mutable
+  --> tests/ui/misleading_mut_method_name.rs:67:8
+   |
+LL |     fn opt_shared_mut(&self) -> Option<&u8> {
+   |        ^^^^^^^^^^^^^^
+
+error: method name suggests that it returns a mutable value, but the return type is not mutable
+  --> tests/ui/misleading_mut_method_name.rs:72:8
+   |
+LL |     fn initialized_mut(&self) -> bool {
+   |        ^^^^^^^^^^^^^^^
+
+error: method name suggests that it returns a mutable value, but the return type is not mutable
+  --> tests/ui/misleading_mut_method_name.rs:77:8
+   |
+LL |     fn len_mut(&self) -> usize {
+   |        ^^^^^^^
+
+error: method name suggests that it returns a mutable value, but the return type is not mutable
+  --> tests/ui/misleading_mut_method_name.rs:82:8
+   |
+LL |     fn owned_mut(&self) -> Mut {
+   |        ^^^^^^^^^
+
+error: method name suggests that it returns a mutable value, but the return type is not mutable
+  --> tests/ui/misleading_mut_method_name.rs:87:8
+   |
+LL |     fn into_mut(self) -> Mut {
+   |        ^^^^^^^^
+
+error: method name suggests that it returns a mutable value, but the return type is not mutable
+  --> tests/ui/misleading_mut_method_name.rs:94:8
+   |
+LL |     fn split_mut(&self) -> &Mut;
+   |        ^^^^^^^^^
+
+error: method name suggests that it returns a mutable value, but the return type is not mutable
+  --> tests/ui/misleading_mut_method_name.rs:99:8
+   |
+LL |     fn split_mut(&self) -> &Mut {
+   |        ^^^^^^^^^
+
+error: aborting due to 9 previous errors
+

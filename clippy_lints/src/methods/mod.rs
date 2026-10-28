@@ -82,6 +82,7 @@ mod map_unwrap_or;
 mod map_unwrap_or_default;
 mod map_unwrap_or_else;
 mod map_with_unused_argument_over_ranges;
+mod misleading_mut_method_name;
 mod mut_mutex_lock;
 mod needless_as_bytes;
 mod needless_character_iteration;
@@ -2570,6 +2571,48 @@ declare_clippy_lint! {
     pub MAP_WITH_UNUSED_ARGUMENT_OVER_RANGES,
     restriction,
     "map of a trivial closure (not dependent on parameter) over a range"
+}
+
+declare_clippy_lint! {
+    /// ### What it does
+    /// Checks for methods with names ending in `_mut` that return a shared reference
+    /// or an owned copy instead of a mutable view of the data.
+    ///
+    /// ### Why is this bad?
+    /// The `_mut` suffix indicates that the method returns a mutable data,
+    /// like `&mut T`, `Option<&mut T>`, or `IterMut`.
+    /// Returning a shared reference or a plain owned copy without mutable access is misleading.
+    ///
+    /// **Note**: The `from_*` constructors are not linted, because the `mut` describes the input.
+    ///
+    /// ### Example
+    /// ```no_run
+    /// struct Buf {
+    ///     data: Vec<u8>,
+    /// }
+    ///
+    /// impl Buf {
+    ///     fn window_mut(&self) -> &[u8] {
+    ///         &self.data
+    ///     }
+    /// }
+    /// ```
+    /// Use instead:
+    /// ```no_run
+    /// struct Buf {
+    ///     data: Vec<u8>,
+    /// }
+    ///
+    /// impl Buf {
+    ///     fn window_mut(&mut self) -> &mut [u8] {
+    ///         &mut self.data
+    ///     }
+    /// }
+    /// ```
+    #[clippy::version = "1.101.0"]
+    pub MISLEADING_MUT_METHOD_NAME,
+    pedantic,
+    "misleading mut method name"
 }
 
 declare_clippy_lint! {
@@ -5163,6 +5206,7 @@ impl_lint_pass!(Methods => [
     MAP_OR_IDENTITY,
     MAP_UNWRAP_OR,
     MAP_WITH_UNUSED_ARGUMENT_OVER_RANGES,
+    MISLEADING_MUT_METHOD_NAME,
     MUT_MUTEX_LOCK,
     NAIVE_BYTECOUNT,
     NEEDLESS_AS_BYTES,
@@ -5399,6 +5443,7 @@ impl<'tcx> LateLintPass<'tcx> for Methods {
             }
 
             new_ret_no_self::check_impl_item(cx, impl_item, self_ty, implements_trait);
+            misleading_mut_method_name::check_impl_item(cx, impl_item);
         }
     }
 
@@ -5430,6 +5475,7 @@ impl<'tcx> LateLintPass<'tcx> for Methods {
             }
 
             new_ret_no_self::check_trait_item(cx, item);
+            misleading_mut_method_name::check_trait_item(cx, item);
         }
     }
 }

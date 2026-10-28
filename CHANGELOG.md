@@ -7398,6 +7398,7 @@ Released 2018-09-13
 [`min_ident_chars`]: https://clippy.rust-lang.org/main/index.html#min_ident_chars
 [`min_max`]: https://clippy.rust-lang.org/main/index.html#min_max
 [`misaligned_transmute`]: https://clippy.rust-lang.org/main/index.html#misaligned_transmute
+[`misleading_mut_method_name`]: https://clippy.rust-lang.org/main/index.html#misleading_mut_method_name
 [`mismatched_bit_width_type`]: https://clippy.rust-lang.org/main/index.html#mismatched_bit_width_type
 [`mismatched_target_os`]: https://clippy.rust-lang.org/main/index.html#mismatched_target_os
 [`mismatching_type_param_order`]: https://clippy.rust-lang.org/main/index.html#mismatching_type_param_order
