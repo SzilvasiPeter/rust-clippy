@@ -7,7 +7,6 @@ struct Mut;
 
 struct Buf {
     data: Vec<u8>,
-    name: String,
 }
 
 impl Buf {
@@ -50,42 +49,43 @@ impl Buf {
         self.data.retain_mut(f);
     }
 
-    fn from_mut(data: &mut u8) -> &u8 {
-        data
-    }
-
-    fn window_mut(&self) -> &[u8] {
-        &self.data
-        //~^^ misleading_mut_method_name
-    }
-
-    fn text_mut(&self) -> &str {
-        &self.name
-        //~^^ misleading_mut_method_name
-    }
-
     fn opt_shared_mut(&self) -> Option<&u8> {
         self.data.first()
-        //~^^ misleading_mut_method_name
-    }
-
-    fn initialized_mut(&self) -> bool {
-        self.data.is_empty()
-        //~^^ misleading_mut_method_name
-    }
-
-    fn len_mut(&self) -> usize {
-        self.data.len()
-        //~^^ misleading_mut_method_name
     }
 
     fn owned_mut(&self) -> Mut {
         Mut
-        //~^^ misleading_mut_method_name
     }
 
     fn into_mut(self) -> Mut {
         Mut
+    }
+
+    fn from_mut(data: &mut u8) -> u8 {
+        42
+    }
+
+    fn is_mut(&self) -> bool {
+        false
+    }
+
+    fn window_mut(&self) -> &[u8] {
+        &[1, 2, 3]
+        //~^^ misleading_mut_method_name
+    }
+
+    fn text_mut(&self) -> &str {
+        "hello world"
+        //~^^ misleading_mut_method_name
+    }
+
+    fn initialized_mut(&self) -> bool {
+        true
+        //~^^ misleading_mut_method_name
+    }
+
+    fn len_mut(&self) -> usize {
+        42
         //~^^ misleading_mut_method_name
     }
 }
@@ -98,7 +98,6 @@ trait SplitMut {
 impl SplitMut for Mut {
     fn split_mut(&self) -> &Mut {
         self
-        //~^^ misleading_mut_method_name
     }
 }
 

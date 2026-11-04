@@ -2583,7 +2583,7 @@ declare_clippy_lint! {
     /// like `&mut T`, `Option<&mut T>`, or `IterMut`.
     /// Returning a shared reference or a plain owned copy without mutable access is misleading.
     ///
-    /// **Note**: The `from_*` constructors are not linted, because the `mut` describes the input.
+    /// **Note**: The `is_*` method is not linted, because it should return with boolean.
     ///
     /// ### Example
     /// ```no_run
@@ -5443,7 +5443,7 @@ impl<'tcx> LateLintPass<'tcx> for Methods {
             }
 
             new_ret_no_self::check_impl_item(cx, impl_item, self_ty, implements_trait);
-            misleading_mut_method_name::check_impl_item(cx, impl_item);
+            misleading_mut_method_name::check_impl_item(cx, impl_item, implements_trait);
         }
     }
 
